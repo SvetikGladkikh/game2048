@@ -5,7 +5,7 @@ import java.util.*;
 public abstract class Board<K, V>{
    private int weight;
    private int height;
-   protected Map<K, V> board = new HashMap<>();
+   protected Map<K, V> board = new HashMap<K,V>();
 
     public Board(int weight, int height) {
         this.height = height;

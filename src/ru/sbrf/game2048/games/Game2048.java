@@ -1,10 +1,10 @@
 package ru.sbrf.game2048.games;
 
-import ru.sbrf.game2048.Direction;
-import ru.sbrf.game2048.GameHelper;
-import ru.sbrf.game2048.Key;
+import ru.sbrf.game2048.boards.Direction;
+import ru.sbrf.game2048.boards.Key;
 import ru.sbrf.game2048.boards.Board;
 import ru.sbrf.game2048.boards.SquareBoard;
+import ru.sbrf.game2048.exeptions.GameOverException;
 
 import java.util.*;
 
@@ -23,8 +23,13 @@ public class Game2048 implements Game {
         }
 
         this.board.fillBoard(values);
-        this.addItem();
-        this.addItem();
+
+        try {
+            this.addItem();
+            this.addItem();
+        } catch (GameOverException e) {
+           throw new RuntimeException("Can't init board");
+        }
     }
 
     @Override
@@ -50,10 +55,12 @@ public class Game2048 implements Game {
     }
 
     @Override
-    public void move(Direction direction) {
+    public void move(Direction direction) throws GameOverException{
 
         if (!canMove())
-            return;
+            throw new GameOverException("Game is over!");
+
+        boolean was_progress = false;
 
         for (int i = 0; i < GAME_SIZE; i++) {
             List<Key> keys;
@@ -74,6 +81,8 @@ public class Game2048 implements Game {
 
             List<Integer> result_values = GameHelper.moveAndMergeEqual(values);
 
+            was_progress |= !result_values.equals(values);
+
             if (direction == Direction.LEFT || direction == Direction.UP) {
                 setValues(keys, result_values);
             } else {
@@ -81,13 +90,19 @@ public class Game2048 implements Game {
             }
         }
 
-        addItem();
+        if (was_progress)
+            addItem();
     }
 
     @Override
-    public void addItem() {
+    public void addItem() throws GameOverException {
         List<Key> keys =  this.board.availableSpace();
-        int index = (int) ( Math.random() * keys.size() );
+        int size = keys.size();
+
+        if (size == 0)
+            throw new GameOverException("Game is over!");
+
+        int index = (int) ( Math.random() *  size);
         Integer value = (int) Math.pow(2, (int)(1 + (int) ( Math.random() * 2 )));
 
         this.board.addItem(keys.get(index), value);

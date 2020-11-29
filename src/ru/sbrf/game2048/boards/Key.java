@@ -1,4 +1,4 @@
-package ru.sbrf.game2048;
+package ru.sbrf.game2048.boards;
 
 import java.util.Objects;
 

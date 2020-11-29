@@ -1,8 +1,5 @@
 package ru.sbrf.game2048.boards;
 
-import ru.sbrf.game2048.Key;
-import ru.sbrf.game2048.boards.Board;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +14,7 @@ public class SquareBoard <V> extends Board <Key, V> {
     @Override
     public void fillBoard(List<V> list) {
         int counter = 0;
-        if (list == null || list.size() < Math.pow(this.size, 2))
+        if (list == null || list.size() != Math.pow(this.size, 2))
             throw new RuntimeException("Invalid parameters");
 
         for (int i = 0; i < this.size; i++) {

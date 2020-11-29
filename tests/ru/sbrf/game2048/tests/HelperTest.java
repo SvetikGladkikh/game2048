@@ -1,6 +1,6 @@
 package ru.sbrf.game2048.tests;
 
-import ru.sbrf.game2048.GameHelper;
+import ru.sbrf.game2048.games.GameHelper;
 
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;

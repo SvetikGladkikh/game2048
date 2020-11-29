@@ -1,4 +1,4 @@
-package ru.sbrf.game2048;
+package ru.sbrf.game2048.games;
 
 import ru.sbrf.game2048.boards.Board;
 import ru.sbrf.game2048.boards.SquareBoard;
